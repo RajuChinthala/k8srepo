@@ -13,55 +13,141 @@ Local cluster
 7. Azure AKS
 
 https://kubernetes.io/
+    
     kubectl [commands] [Type] [name] [flags]
+        
         -- commands : create, get , describe, delete etc
         -- Types: pods, services
         -- flags: -f, -o, etc
+    
     Ex: kubectl get pods my-pod -0 yaml
 
     kubectl config get-contexts 
     kubectl config set-contexts local-cluster
 
-
+    kubectl api-resources | grep pods
 
 Minikube:
 https://minikube.sigs.k8s.io/docs/start/
+
 Install Minikube
 
-start your cluster
+Start your cluster
+
    -- minikube start --nodes 2 -p local-cluster-name driver=docker
         (master node 1 and 1 worker node)
+
     -- minikube status -p local-cluster-name
+
     -- minikube node add --worker -p local-cluster-name
+
     -- minikube node delete local-cluster-m03 -p local-cluster-name 
 
-interact with your cluster
+Interact with your cluster
+
     -- kubectl get po -A
+
     -- minikube kubectl -- get po -A
+
     -- alias kubectl="minikube kubectl --" (add in config)
+
     -- minikube dashboard
 
 Deployments:
    Services:
+
     --  kubectl create deployment hello-minikube --image=kicbase/echo-server:1.0
+   
     --  kubectl expose deployment hello-minikube --type=NodePort --port=8080
+   
     --  kubectl get services hello-minikube
+   
     --  minikube service hello-minikube
+   
     --  kubectl port-forward service/hello-minikube 7080:8080
 
-    Manage your cluster
+Manage your cluster
+
     --  minikube pause
+
     --  minikube unpause
+
     --  minikube stop
+
     --  minikube config set memory 9001 (change default memory)
+
     --  minikube addons list
+
     --  minikube start -p aged --kubernetes-version=v1.16.1 (Create a second cluster running an older Kubernetes release)
+
     --  minikube delete --all
     
     LoadBalancer:
+    
     --  kubectl create deployment balanced --image=kicbase/echo-server:1.0
+    
     --  kubectl expose deployment balanced --type=LoadBalancer --port=8080
+    
     --  minikube tunnel
+
+
+Pod:
+
+-- One or more containers  and shares same port and network
+
+create:
+
+    kubectl run nginx-pod --image=nginx
+    kubectl apply -f nginx-pod.yaml
+
+view:
+
+    kubectl logs nginx-pod2
+    kubectl get pod nginx-pod1 -o wide (more information of the pod)
+    kubectl get pod nginx-pod2 -o yaml (more information of the pod)
+    kubectl get pods
+    kubectl get pods -l team=integrations
+    kubectl get pods -l team=integrations,app=App-Pod2
+    kubectl describe pod nginx-pod2
+    kubectl exec -it nginx-pod2 -- bash (single container)
+    ls
+    kubectl exec -it nginx-pod2 -- bash (multiple container)
+
+delete
+
+    -- kubectl delete pod <pod-name>
+    -- kubectl delete -f nginx-pod.yaml
+
+Manage
+
+Access:
+    kubectl port-forward nginx-pod2 8083:80
+
+pod-yaml:
+
+apiversion: v1
+kind: Pod
+metadata:
+    name: ngnx-pod1
+    labels:
+        team:   inegrations
+        app: App-Pod
+spec:
+    containers:
+        -   name: nginx-container
+            image: nginx:latest
+            ports:
+                -   containerPort: 80
+
+          
+Features:
+-------------
+
+Relicasets and Deploymnts:
+    Self Healing
+    High Availability
+    Rolling and Roll Back
+
 
 
 
