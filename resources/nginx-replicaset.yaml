@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+    name: nginx-replicaset
+    labels: 
+      env: dev
+      role: App-Relicas
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      role: App-Relicas
+  template:
+    metadata:
+      name: nginx-relicas-template
+      labels:
+        role: App-Relicas
+    spec:
+      containers:
+        - name: nginx-container
+          image: nginx:latest
+          ports:
+            - containerPort: 80

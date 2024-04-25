@@ -108,15 +108,18 @@ view:
     kubectl get pods
     kubectl get pods -l team=integrations
     kubectl get pods -l team=integrations,app=App-Pod2
+    kubectl get po -l show-labels
     kubectl describe pod nginx-pod2
     kubectl exec -it nginx-pod2 -- bash (single container)
     ls
     kubectl exec -it nginx-pod2 -- bash (multiple container)
+    kubectl get all
 
 delete
 
     -- kubectl delete pod <pod-name>
     -- kubectl delete -f nginx-pod.yaml
+    -- kubectl delete all --all  (deletes all services and pods and and replica sets all objects)
 
 Manage
 
@@ -144,13 +147,49 @@ Features:
 -------------
 
 Relicasets and Deploymnts:
-    Self Healing
-    High Availability
+ -------------------------------------   
+    Self Healing 
+    High Availability 
     Rolling and Roll Back
 
+create:
 
+    kubectl apply -f C:\Users\rajuc\OneDrive\Documents\GitHub\k8srepo\resources\nginx-replicaset.yaml
+    kubectl get rs
 
+shelf healing:
+----------------------
+ Even one pod is down , replicas will remain same number (instead of down one -> creates new pod)
+    
+    minikube start --nodes 2 -p local-cluster-name driver=docker
+    minikube node add --worker -p local-cluster-name
+    kubectl apply -f C:\Users\rajuc\OneDrive\Documents\GitHub\k8srepo\resources\nginx-replicaset.yaml
 
+    kubectl delete pod nginx-replicaset-p957s
+    kubectl get po (3 pods will be exist even after delete as well)
+
+High Availability:
+-------------------
+Even one node is delete, replicas will remain same number (instead of down one -> creates new node will be created) runs on other nodes
+    
+    minikube start --nodes 2 -p local-cluster-name driver=docker
+    minikube node add --worker -p local-cluster-name
+    kubectl apply -f C:\Users\rajuc\OneDrive\Documents\GitHub\k8srepo\resources\nginx-replicaset.yaml
+
+    kubectl get po -o wide (delete node which pod are running on)
+    minikube node delete local-cluster-name-m02 -p local-cluster-name
+    kubectl get nodes
+    kubectl get po -o wide
+
+Deployment:
+---------------
+- similar to relicasets but has more advantages, 
+- relicas will create as part of deployment 
+- rollout and rollover features with deployment
+
+kubectl create/apply -f nginx-dep.yaml
+kubectl get deployments
+kubectl scale --replicas=6 deployment/nginx-deployment
 
 
 
