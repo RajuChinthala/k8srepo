@@ -211,6 +211,34 @@ Rollback:
 
 Services:
 ---------
+
 Introduction
+    To access the container or pod need to use ip address, but pod may be delete and recreated 
+    so we cannot access using pod and container level ip addresses , so service provides common ip for all pods in cluster 
+
+   A Kubernetes Service is an abstraction which defines a logical set of Pods running somewhere in your cluster, that all provide the same functionality. When created, each Service is assigned a unique IP address (also called clusterIP)
+
 Advantantages
+    
+    Loadbalancing
+    Service Discovery
+    Zero downtime deployments
+
 Types
+
+    ClusterIp (default) - All pods access with in the service, not outside. ex: DB
+    NodePort - 
+    LoadBalancer    
+
+
+kubectl apply -f C:\Users\rajuc\OneDrive\Documents\GitHub\k8srepo\resources\nginx-svc.yaml
+kubectl get svc my-nginx
+kubectl describe svc my-nginx
+curl 10.103.17.21:8082
+
+access:
+Get service specific pods
+- kubectl get pods -l run=my-service -o wide
+- kubectl exec -it nginx-deployment-668bdf7d8c-5pnqt -- sh
+
+

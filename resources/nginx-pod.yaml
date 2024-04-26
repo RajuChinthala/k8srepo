@@ -1,10 +1,11 @@
 apiVersion: v1
 kind: Pod
 metadata:
-    name: nginx-pod2
+    name: nginx-pods
     labels:
         team: integrations
-        app: App-Pod2
+        app: nginx-pods
+        run: nginx-pods
 spec:
     containers:
         -   name: nginx-container
