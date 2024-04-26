@@ -5,10 +5,18 @@ metadata:
   labels:
     app: my-nginx-service
 spec:
+  type: LoadBalancer
   selector:
-    app: nginx-pods
+    app: nginxpod
   ports:
-  - port: 8082
+  - name: nginxpod
+    port: 8082
     targetPort: 80
     protocol: TCP
+    nodePort: 30000
+  - name: nginx-replicaset
+    port: 8083
+    targetPort: 80
+    protocol: TCP
+    nodePort: 30002
  

@@ -1,14 +1,15 @@
 apiVersion: v1
 kind: Pod
 metadata:
-    name: nginx-pods
+    name: nginxpod
     labels:
         team: integrations
-        app: nginx-pods
-        run: nginx-pods
+        app: nginxpod
+        run: nginxpod
+        environment: dev
 spec:
     containers:
-        -   name: nginx-container
-            image: nginx:latest
-            ports:
-                -   containerPort: 80
+    -   name: nginxpod
+        image: nginx:latest
+        ports:
+        - containerPort: 80

@@ -227,18 +227,27 @@ Advantantages
 Types
 
     ClusterIp (default) - All pods access with in the service, not outside. ex: DB
-    NodePort - 
-    LoadBalancer    
-
+    NodePort - nodePort ranges from 30000 to 32767
+    LoadBalancer  - Can be accessed outside of the service, same as NodePort. node port not suggested to use. cloud provider will support LoadBalancer  
 
 kubectl apply -f C:\Users\rajuc\OneDrive\Documents\GitHub\k8srepo\resources\nginx-svc.yaml
 kubectl get svc my-nginx
 kubectl describe svc my-nginx
-curl 10.103.17.21:8082
+curl 10.103.17.21:8082 - No results
 
 access:
 Get service specific pods
 - kubectl get pods -l run=my-service -o wide
 - kubectl exec -it nginx-deployment-668bdf7d8c-5pnqt -- sh
+    # curl 10.103.17.21:8082 -  results, we can use service name as well
+- kubectl port-forward service/my-nginx-service 8083:8082
+In browser we can access localhost:8083 -> webpage will be open
+
+- kubectl get endpoints
+- minikube ip -p local-cluster-name
+- minikube service my-nginx-service -p local-cluster-name
+
+
+
 
 
