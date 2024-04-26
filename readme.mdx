@@ -187,10 +187,30 @@ Deployment:
 - relicas will create as part of deployment 
 - rollout and rollover features with deployment
 
-kubectl create/apply -f nginx-dep.yaml
-kubectl get deployments
-kubectl scale --replicas=6 deployment/nginx-deployment
+ kubectl create/apply -f nginx-dep.yaml
+ 
+ kubectl get deployments
+ 
+ kubectl scale --replicas=6 deployment/nginx-deployment
+
+Rollout and Rollover:
+------------------------
+change version in deployment yaml
+   nginx:1.21.3
+   
+   kubectl apply -f nginx-deployment.yaml
+   kubectl set image deployment/nginx-deployment nginx-container=nginx:1.21
+
+   kubectl rollout history deployment/nginx-deployment
+
+Rollback:
+--------
+   kubectl rollout undo deployment/nginx-deployment --to-revision=1
+   kubectl rollout status deployment/nginx-deployment
 
 
-
-
+Services:
+---------
+Introduction
+Advantantages
+Types
