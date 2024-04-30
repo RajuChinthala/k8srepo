@@ -248,6 +248,32 @@ In browser we can access localhost:8083 -> webpage will be open
 - minikube service my-nginx-service -p local-cluster-name
 
 
+Ingress:
+This is used to securly access the pods act as a front controller.
+The different pods need to have corresponding load balancers
+But ingress controller pod will have only one load balancer. 
+The ingress controller helps to redirect request to required pods based on urls 
+
+- minikube start --vm=true -p ingress-cluster
+- kubectl apply -f nginx-deployment.yaml
+- kubectl apply -f nginx-svc.yaml
+- kubectl apply -f ingress-path-controller
+
+types:
+host based
+path based
+
+We cannot accessed directly by using nginx-deme.com, so need to map to minikube ip address in hosts file
 
 
+Namespaces:
+- kubectl create namespaces ngix-namespaces
+- kubectl get namespaces
 
+- namespace yaml structure
+
+
+Volumes:
+ - Volumes in pod
+ - Volumes in node
+ - Volumes in cloud as persistance storage
